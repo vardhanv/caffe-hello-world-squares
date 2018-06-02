@@ -1,7 +1,6 @@
-# caffe Deep Learning "Hello World" that computes squares 
+# Deep Learning (Caffe) "Hello World" that computes squares in C++
 
 This repository creates a very simple caffe deep learning model to compute squares of numbers between 1 & 100. 
-I found very little documentation that allows the creation of a simple hello world.
 
 This example can be simplified further if required.
 
