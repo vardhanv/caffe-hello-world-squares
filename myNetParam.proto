@@ -44,30 +44,43 @@ layer {
   inner_product_param {
     num_output: 5
     weight_filler {
-      type: "constant"
-      value: 0.2
+      type: "xavier"
     }
     bias_filler {
-      type: "constant"
-      value: 0.2
+      type: "xavier"
     }
   }
 }
 
 layer {
+  name: "square-layer-11"
+  type: "InnerProduct"
+  bottom:    "square-layer-12"
+  top:       "square-layer-112"
+  inner_product_param {
+    num_output: 5
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "xavier"
+    }
+  }
+}
+
+
+layer {
   name: "square-layer-2"
   type: "InnerProduct"
-  bottom: "square-layer-12"
+  bottom: "square-layer-112"
   top:    "predicted-square"
   inner_product_param {
     num_output: 1
     weight_filler {
-      type: "constant"
-      value: 0.2
+      type: "xavier"
     }
     bias_filler {
-      type: "constant"
-      value: 0.2
+      type: "xavier"
     }
   }
 }

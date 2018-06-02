@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
    using boost::shared_ptr;
 
 
-   cout << "Hello" << endl;
+   cout << "Hello" << endl << flush;
    google::InitGoogleLogging(argv[0]);
 
    vector<int> dim(2,0); // number of observations
@@ -52,25 +52,27 @@ int main(int argc, char *argv[])
    // setup dimensions of input layer
    n->layer_by_name("vishnu-layer-1").get()->LayerSetUp(blobList, blobList);
 
+
+   // setup input parameters
    const vector<Blob<float> *> & inputBlob = n->input_blobs();
-
-   // train the neural net
    float *d = inputBlob[0]->mutable_cpu_data(), *l = inputBlob[1]->mutable_cpu_data();
-
    for (int j=0; j< BATCH_SIZE; j++) {
       d[j] = rand() % 100;
       l[j] = d[j]*d[j];
-      cout << "(" << d[j] << "," << l[j] << ")" << endl;
+      //cout << "(" << d[j] << "," << l[j] << ")" << endl << flush;
    }
-   cout << endl;
+   //cout << endl << flush;
+
+   // train the neural net
+   cout << "Starting training..." << endl << flush;
 
    mySolver->Solve();
 
-   cout << "Finished training.." << endl;
+   cout << "Finished training.." << endl << flush;
 
    // lets get the output
-   cout << "predicted-squre-asum-data is = " << n->blob_by_name("predicted-square")->asum_data() << endl;
-   cout << "myloss-output-asum-data is = "   << n->blob_by_name("myloss-output")->asum_data() << endl;
+   cout << "predicted-squre-asum-data is = " << n->blob_by_name("predicted-square")->asum_data() << endl << flush;
+   cout << "myloss-output-asum-data is = "   << n->blob_by_name("myloss-output")->asum_data() << endl << flush;
 
    return 0;
 }
