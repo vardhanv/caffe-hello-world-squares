@@ -1,0 +1,86 @@
+# The Net 
+# The train-net
+name: "train-net"
+debug_info: true
+layer {
+   name: "vishnu-layer-1"
+   type: "Input"
+   top: "data"
+   top: "label"
+   include {
+      phase: TRAIN
+   }
+   input_param {
+      shape {
+         dim: 100
+         dim: 1
+      }
+   }
+}
+
+# The Test input layer
+layer {
+   name: "test-layer-1"
+   type: "Input"
+   top: "data"
+   top: "fake-label"
+   include {
+      phase: TEST
+   }
+   input_param {
+      shape {
+         dim: 1
+         dim: 1
+      }
+   }
+}
+
+
+layer {
+  name: "square-layer-1"
+  type: "InnerProduct"
+  bottom: "data"
+  top:    "square-layer-12"
+  inner_product_param {
+    num_output: 5
+    weight_filler {
+      type: "constant"
+      value: 0.2
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.2
+    }
+  }
+}
+
+layer {
+  name: "square-layer-2"
+  type: "InnerProduct"
+  bottom: "square-layer-12"
+  top:    "predicted-square"
+  inner_product_param {
+    num_output: 1
+    weight_filler {
+      type: "constant"
+      value: 0.2
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.2
+    }
+  }
+}
+
+layer {
+  name: "loss-layer"
+  type: "EuclideanLoss"
+  bottom: "label"
+  bottom: "predicted-square"
+  top:    "myloss-output"
+  include {
+     phase: TRAIN
+  }
+}
+
+
